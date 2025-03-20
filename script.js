@@ -1,7 +1,7 @@
 const video = document.getElementById('webcam');
 const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');
-const ngrokUrl = "https://cdc2-34-126-144-66.ngrok-free.app"; // Replace with your ngrok URL
+const ngrokUrl = "ttps://781a-34-126-144-66.ngrok-free.app"; // Replace with your ngrok URL
 const displayImage = document.getElementById('displayImage');
 
 navigator.mediaDevices.getUserMedia({ video: true })
