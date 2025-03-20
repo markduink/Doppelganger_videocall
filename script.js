@@ -1,4 +1,4 @@
-const ngrokUrl = "https://a272-34-142-156-152.ngrok-free.app"; // Replace with your ngrok URL
+const ngrokUrl = "https://46e7-34-142-156-152.ngrok-free.app"; // Replace with your ngrok URL
 
 fetch(ngrokUrl, {
     method: 'POST',
