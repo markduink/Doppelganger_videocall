@@ -1,7 +1,7 @@
 const video = document.getElementById('webcam');
 const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');
-const ngrokUrl = "ttps://781a-34-126-144-66.ngrok-free.app"; // Replace with your ngrok URL
+const ngrokUrl = "ttps://781a-34-126-144-66.ngrok-free.app";
 const displayImage = document.getElementById('displayImage');
 
 navigator.mediaDevices.getUserMedia({ video: true })
@@ -12,8 +12,14 @@ navigator.mediaDevices.getUserMedia({ video: true })
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             console.log("Canvas dimensions:", canvas.width, canvas.height);
-            setInterval(sendFrame, 100); // Send every 100ms
+            setInterval(sendFrame, 100);
         };
+        video.onloadeddata = () => {
+          console.log("Video data loaded");
+        }
+        video.onerror = (error) => {
+          console.error("Video element error", error);
+        }
     })
     .catch(error => {
         console.error("Error accessing webcam:", error);
@@ -46,8 +52,4 @@ function sendFrame() {
     } catch (error) {
         console.error("ToDataURL error:", error);
     }
-}
-
-        console.error("Fetch error:", error);
-    });
 }
