@@ -1,7 +1,8 @@
+// JavaScript (script.js)
 const video = document.getElementById('webcam');
 const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');
-const ngrokUrl = "https://6a86-34-126-144-66.ngrok-free.app";
+const ngrokUrl = "https://df29-34-126-144-66.ngrok-free.app"; // Replace with your ngrok URL
 const displayImage = document.getElementById('displayImage');
 
 navigator.mediaDevices.getUserMedia({ video: true })
@@ -12,7 +13,7 @@ navigator.mediaDevices.getUserMedia({ video: true })
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             console.log("Canvas dimensions:", canvas.width, canvas.height);
-            setInterval(sendFrame, 100);
+            setInterval(sendFrame, 100); // Send every 100ms
         };
         video.onloadeddata = () => {
           console.log("Video data loaded");
@@ -30,6 +31,12 @@ function sendFrame() {
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     try {
         const imageData = canvas.toDataURL('image/jpeg');
+
+        if (!imageData) {
+            console.error("imageData is empty");
+            return;
+        }
+
         console.log("Image data:", imageData);
         fetch(ngrokUrl, {
             method: 'POST',
