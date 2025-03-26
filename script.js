@@ -24,10 +24,5 @@ navigator.mediaDevices.getUserMedia({ video: true })
     })
     .catch(error => {
         console.error("Error accessing webcam:", error);
-    });
-
-function sendFrame() {
-    console.log("Drawing
-        console.error("ToDataURL error:", error);
-    }
-}
+        console.error("Error name:", error.name);
+        console
