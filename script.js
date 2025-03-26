@@ -4,7 +4,7 @@ const output = document.getElementById('output');
 const ctx = canvas.getContext('2d');
 
 // Replace with your Flask server URL if using ngrok
-const SERVER_URL = "https://39b1-35-247-138-37.ngrok-free.app";  
+const SERVER_URL = "https://5079-35-247-138-37.ngrok-free.app";  
 
 async function startWebcam() {
     try {
