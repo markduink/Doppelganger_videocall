@@ -1,17 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webcam GAN Art</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Live Webcam GAN Art</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    video {
+      width: 500px;
+      border-radius: 10px;
+    }
+    img {
+      width: 500px;
+      margin-top: 20px;
+      border-radius: 10px;
+      display: block;
+    }
+  </style>
 </head>
 <body>
-    <h1>Live Webcam GAN Art</h1>
-    <video id="webcam" autoplay></video>
-    <canvas id="canvas" style="display: none;"></canvas>
-    <img id="output" alt="Transformed Artwork">
-    
-    <script src="script.js"></script>  <!-- Link external JS file -->
+  <h1>Live new Webcam GAN Art</h1>
+
+  <!-- Webcam feed -->
+  <video id="webcam" autoplay playsinline></video>
+
+  <!-- Transformed artwork -->
+  <img id="output" alt="Transformed Artwork" />
+
+  <!-- JavaScript file -->
+  <script src="script.js"></script>
 </body>
 </html>
 
