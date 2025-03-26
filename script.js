@@ -27,36 +27,7 @@ navigator.mediaDevices.getUserMedia({ video: true })
     });
 
 function sendFrame() {
-    console.log("Drawing image to canvas");
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    try {
-        const imageData = canvas.toDataURL('image/jpeg');
-
-        if (!imageData) {
-            console.error("imageData is empty");
-            return;
-        }
-
-        console.log("Image data:", imageData);
-        fetch(ngrokUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ frame: imageData })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.image) {
-                displayImage.src = "data:image/jpeg;base64," + data.image;
-            } else {
-                console.error("Error:", data.error);
-            }
-        })
-        .catch(error => {
-            console.error("Fetch error:", error);
-        });
-    } catch (error) {
+    console.log("Drawing
         console.error("ToDataURL error:", error);
     }
 }
