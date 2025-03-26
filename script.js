@@ -2,7 +2,7 @@
 const video = document.getElementById('webcam');
 const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');
-const ngrokUrl = "https://cc12-35-247-138-37.ngrok-free.app"; // Replace with your ngrok URL
+const ngrokUrl = "YOUR_NGROK_URL"; // Replace with your ngrok URL
 const displayImage = document.getElementById('displayImage');
 
 navigator.mediaDevices.getUserMedia({ video: true })
@@ -27,4 +27,36 @@ navigator.mediaDevices.getUserMedia({ video: true })
     });
 
 function sendFrame() {
-    console.log("Drawing
+    console.log("Drawing image to canvas");
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    try {
+        const imageData = canvas.toDataURL('image/jpeg');
+
+        if (!imageData) {
+            console.error("imageData is empty");
+            return;
+        }
+
+        console.log("Image data:", imageData);
+        fetch(ngrokUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ frame: imageData })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.image) {
+                displayImage.src = "data:image/jpeg;base64," + data.image;
+            } else {
+                console.error("Error:", data.error);
+            }
+        })
+        .catch(error => {
+            console.error("Fetch error:", error);
+        });
+    } catch (error) {
+        console.error("ToDataURL error:", error);
+    }
+}
