@@ -1,7 +1,7 @@
 const video = document.getElementById('webcam');
 const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');
-const ngrokUrl = "https://7dc2-35-247-138-37.ngrok-free.app"; // Replace with your ngrok URL
+const ngrokUrl = "YOUR_NGROK_URL"; // Replace with your ngrok URL
 const displayImage = document.getElementById('displayImage');
 
 navigator.mediaDevices.getUserMedia({ video: true })
@@ -28,7 +28,7 @@ function sendFrame() {
     console.log("Drawing image to canvas");
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     try {
-        const imageData = canvas.toDataURL('image/jpeg', 0.9); // 0.9 quality
+        const imageData = canvas.toDataURL('image/png'); // Changed to PNG
         if (!imageData) {
             console.error("imageData is empty");
             return;
