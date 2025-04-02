@@ -10,32 +10,34 @@
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
       background: linear-gradient(to bottom, #1e1e1e, #2c2c2c);
       color: white;
+      overflow: hidden;
     }
 
     .call-container {
       position: relative;
       width: 100vw;
       height: 100vh;
-      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
     #output {
-      width: 90%;
-      max-width: 700px;
-      border-radius: 30px;
-      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+      height: 90%;
+      aspect-ratio: 9 / 16;
+      border-radius: 24px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+      object-fit: cover;
     }
 
     #webcam {
       position: absolute;
       top: 20px;
-      left: 20px;
-      width: 160px;
-      height: auto;
-      border-radius: 20px;
+      left: 140px; /* shifted toward center */
+      width: 220px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 18px;
       border: 2px solid white;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
       z-index: 10;
@@ -56,12 +58,16 @@
     }
 
     @media (max-width: 600px) {
-      #output {
-        max-width: 95%;
+      #webcam {
+        width: 160px;
+        height: 100px;
+        left: 80px;
       }
 
-      #webcam {
-        width: 120px;
+      #output {
+        width: 90%;
+        height: auto;
+        aspect-ratio: 9 / 16;
       }
 
       .controls img {
