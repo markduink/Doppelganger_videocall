@@ -2,9 +2,14 @@ const video = document.getElementById('webcam');
 const canvas = document.createElement('canvas');
 const ctx = canvas.getContext('2d');
 const output = document.getElementById('output');
+const statusText = document.createElement('div'); // for "Connecting..."
+statusText.innerText = "🔄 Connecting...";
+statusText.style.fontSize = "20px";
+statusText.style.marginTop = "10px";
+document.body.appendChild(statusText);
 
-// ✅ Replace with your current ngrok URL
-const SERVER_URL = "https://1981-34-124-187-219.ngrok-free.app";
+
+const SERVER_URL = "https://c260-34-143-227-250.ngrok-free.app"; 
 
 async function startWebcam() {
   try {
@@ -22,7 +27,6 @@ async function sendFrame() {
   canvas.height = video.videoHeight;
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  // Convert to base64 JPEG (strip data URL prefix)
   const imageData = canvas.toDataURL('image/jpeg').split(',')[1];
 
   try {
@@ -38,17 +42,24 @@ async function sendFrame() {
 
     if (result.image) {
       output.src = `data:image/jpeg;base64,${result.image}`;
+      statusText.innerText = "";  // hide status if image is returned
     } else if (result.error) {
-      console.error("⚠️ Server error:", result.error);
+      console.warn("⚠️ Server message:", result.error);
+      if (result.error.includes("No face detected")) {
+        statusText.innerText = "🔄 Connecting...";
+      } else {
+        statusText.innerText = "⚠️ Error: " + result.error;
+      }
     }
   } catch (err) {
     console.error("❌ Error sending frame:", err);
+    statusText.innerText = "❌ Connection error";
   }
 }
 
-// 🔁 Start sending frames regularly once video is ready
 video.addEventListener('loadeddata', () => {
-  setInterval(sendFrame, 1000);
+  setInterval(sendFrame, 1000); // You can speed this up if needed
 });
 
 startWebcam();
+
