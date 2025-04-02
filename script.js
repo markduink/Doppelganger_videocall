@@ -4,7 +4,7 @@ const ctx = canvas.getContext('2d');
 const output = document.getElementById('output');
 
 // ✅ Replace with your current ngrok URL
-const SERVER_URL = "https://280e-34-27-148-227.ngrok-free.app";
+const SERVER_URL = "https://73ef-34-27-148-227.ngrok-free.app";
 
 async function startWebcam() {
   try {
@@ -22,11 +22,11 @@ async function sendFrame() {
   canvas.height = video.videoHeight;
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  // Get base64 JPEG without prefix
+  // Convert to base64 JPEG and remove the prefix
   const imageData = canvas.toDataURL('image/jpeg').split(',')[1];
 
   try {
-    const response = await fetch(SERVER_URL, {
+    const response = await fetch(`${SERVER_URL}/process`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -46,9 +46,13 @@ async function sendFrame() {
   }
 }
 
-// 🔁 Loop frames every second
+// 🔁 Start sending frames regularly once video is ready
 video.addEventListener('loadeddata', () => {
-  setInterval(sendFrame, 1000); // adjust to faster if needed
+  setInterval(sendFrame, 1000); // send every second
+});
+
+startWebcam();
+
 });
 
 startWebcam();
