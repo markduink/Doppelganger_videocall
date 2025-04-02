@@ -6,66 +6,56 @@
   <title>Live Webcam GAN Art</title>
   <style>
     body {
-      margin: 0;
-      background-color: #000;
       font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      position: relative;
-    }
-
-    #output {
-      height: 90%;
-      aspect-ratio: 1 / 1;
-      max-width: 90vw;
-      border-radius: 24px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-      object-fit: cover;
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: white;
+      overflow: hidden;
     }
 
     #webcam {
-      position: absolute;
+      position: fixed;
       top: 20px;
       left: 20px;
       width: 200px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      border: 2px solid white;
+      height: auto;
+      border-radius: 10px;
+      z-index: 2;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     }
 
-    #controls {
+    #output {
       position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: contain;
+      z-index: 1;
+    }
+
+    #status {
+      position: fixed;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      width: 300px;
-      height: auto;
-    }
-
-    #controls img {
-      width: 100%;
+      background: rgba(0,0,0,0.6);
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 18px;
+      color: white;
+      z-index: 3;
     }
   </style>
 </head>
 <body>
-
-  <!-- Webcam Stream (top-left) -->
   <video id="webcam" autoplay muted playsinline></video>
-
-  <!-- Transformed GAN Artwork -->
   <img id="output" alt="Transformed Artwork" />
-
-  <!-- Video call control overlay (custom PNG you upload) -->
-  <div id="controls">
-    <img src="controls.png" alt="Call Controls" />
-  </div>
+  <div id="status">🔄 Connecting...</div>
 
   <!-- JavaScript -->
   <script src="script.js"></script>
-
 </body>
 </html>
+
