@@ -6,33 +6,79 @@
   <title>Live Webcam GAN Art</title>
   <style>
     body {
-      font-family: sans-serif;
-      text-align: center;
-      margin: 20px;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(to bottom, #1e1e1e, #2c2c2c);
+      color: white;
     }
-    video {
-      width: 500px;
-      border-radius: 10px;
+
+    .call-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    img {
-      width: 500px;
-      margin-top: 20px;
-      border-radius: 10px;
-      display: block;
+
+    #output {
+      width: 90%;
+      max-width: 700px;
+      border-radius: 30px;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    #webcam {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 160px;
+      height: auto;
+      border-radius: 20px;
+      border: 2px solid white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+    }
+
+    .controls {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+    }
+
+    .controls img {
+      width: 240px;
+      height: auto;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+    }
+
+    @media (max-width: 600px) {
+      #output {
+        max-width: 95%;
+      }
+
+      #webcam {
+        width: 120px;
+      }
+
+      .controls img {
+        width: 180px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Live new Webcam GAN Art</h1>
+  <div class="call-container">
+    <video id="webcam" autoplay muted playsinline></video>
+    <img id="output" alt="Transformed Artwork" />
+    <div class="controls">
+      <img src="call-controls.png" alt="Call Controls" />
+    </div>
+  </div>
 
-  <!-- Webcam feed -->
-  <video id="webcam" autoplay playsinline></video>
-
-  <!-- Transformed artwork -->
-  <img id="output" alt="Transformed Artwork" />
-
-  <!-- JavaScript file -->
   <script src="script.js"></script>
 </body>
 </html>
-
