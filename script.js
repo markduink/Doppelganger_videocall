@@ -4,7 +4,7 @@ const ctx = canvas.getContext('2d');
 const output = document.getElementById('output');
 
 // ✅ Replace this with your current ngrok URL
-const SERVER_URL = "https://b3bd-35-247-138-37.ngrok-free.app";
+const SERVER_URL = "https://20b0-35-198-201-173.ngrok-free.app";
 
 async function startWebcam() {
   try {
