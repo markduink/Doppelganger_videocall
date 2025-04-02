@@ -22,7 +22,7 @@ async function sendFrame() {
   canvas.height = video.videoHeight;
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  // Convert to base64 JPEG and remove the prefix
+  // Convert to base64 JPEG (strip data URL prefix)
   const imageData = canvas.toDataURL('image/jpeg').split(',')[1];
 
   try {
@@ -48,12 +48,7 @@ async function sendFrame() {
 
 // 🔁 Start sending frames regularly once video is ready
 video.addEventListener('loadeddata', () => {
-  setInterval(sendFrame, 1000); // send every second
+  setInterval(sendFrame, 1000);
 });
 
 startWebcam();
-
-});
-
-startWebcam();
-
