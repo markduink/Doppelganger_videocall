@@ -1,127 +1,103 @@
-# 👯 DoppelGanger Video Call — Generative GAN Artwork
+# 👯 DoppelGänger Video Call — Real-Time GAN Webcam Transformation
 
-This project transforms your **live webcam** into a GAN-powered doppelgänger using the [e4e encoder](https://github.com/omertov/encoder4editing) over the pSp framework. It mimics a FaceTime-style UI on the frontend and shows AI-generated faces based on your webcam input.
+This project transforms your **live webcam input** into a **GAN-generated doppelgänger** using the [e4e encoder](https://github.com/omertov/encoder4editing) over the pSp framework. Inspired by FaceTime, the UI displays a live feed of you and a stylized GAN output of your face in real time.
 
-Live demo: [markduink.github.io/Doppelganger_videocall](https://markduink.github.io/Doppelganger_videocall)
+🔴 **Live Demo:**  
+[markduink.github.io/Doppelganger_videocall](https://markduink.github.io/Doppelganger_videocall)
 
 ---
 
 ## 🚀 Features
 
 - Real-time GAN image generation from webcam input  
-- FaceTime-style UI with floating controls and video layout  
-- AI doppelgänger generation with optional looping GAN animation  
-- Hosted with Google Colab backend + ngrok and frontend on GitHub Pages
+- FaceTime-style UI with webcam stream + transformed face layout  
+- AI doppelgänger generation with looping GAN output  
+- Runs with a Google Colab backend and is served to a GitHub Pages frontend
 
 ---
 
-## 🫠 Requirements
+## 🧪 Try It Yourself (in Colab)
+
+🔗 **Run the backend on Google Colab**  
+Open this notebook and follow the instructions:  
+👉 [Colab Link](https://colab.research.google.com/drive/1Kf5vpd7K9j23wLXk58JZAm8Dlmpxx8DC?usp=sharing)
+
+### Quick Setup in Colab:
+1. Run the setup cells to:
+   - Clone the encoder repo  
+   - Load the pretrained e4e model  
+   - Start the Flask server and expose via ngrok  
+
+2. After running the cell that prints the ngrok URL, **copy the URL it shows** (it ends in `/process`)
+
+3. Open `script.js` in your GitHub repo  
+   Replace the existing `SERVER_URL` with the one you copied from Colab.
+
+4. Commit your changes, and open your GitHub Pages site to test it live!
+
+---
+
+## 🧰 Requirements
 
 ### Google Colab Backend:
-
+- Python 3.9+ in Google Colab  
 - PyTorch 1.7.1 + CUDA 11.0  
 - encoder4editing repo  
-- e4e pretrained model (`e4e_ffhq_encode.pt`)  
-- Packages: `flask`, `flask_cors`, `pyngrok`, `face-recognition`, `torchvision`
+- Pretrained e4e model `e4e_ffhq_encode.pt`  
+- Python packages:  
+  `flask`, `flask_cors`, `pyngrok`, `face-recognition`, `torchvision`, `ninja`
 
 ### GitHub Pages Frontend:
-
-- HTML + JS  
-- Deployed to GitHub Pages repo: [https://github.com/markduink/Doppelganger_videocall](https://github.com/markduink/Doppelganger_videocall)
+- HTML + JavaScript
+- Hosted via GitHub Pages:  
+  [https://github.com/markduink/Doppelganger_videocall](https://github.com/markduink/Doppelganger_videocall)
 
 ---
 
-## 🔧 Setup Instructions (Google Colab)
+## 💻 Local Development
 
-### 1. Clone model repo
+If needed, you can clone this repo:
 
 ```bash
-!rm -rf /content/encoder4editing
-!git clone https://github.com/omertov/encoder4editing.git /content/encoder4editing
+git clone https://github.com/markduink/Doppelganger_videocall.git
+cd Doppelganger_videocall
 ```
 
-### 2. Load the pretrained e4e model
-
-Download and mount your Google Drive:
-
-```python
-from google.colab import drive
-drive.mount('/content/drive')
-
-!cp "/content/drive/MyDrive/e4e_ffhq_encode.pt" "/content/encoder4editing/e4e_ffhq.pt"
-```
-
-> 🔗 This file should be ~1.2GB. Ensure it's named `e4e_ffhq.pt` and copied to `/content/encoder4editing/`
-
-### 3. Install dependencies
-
-```bash
-!pip install ninja flask flask_cors pyngrok face-recognition
-```
-
-### 4. Load the model
-
-```python
-from argparse import Namespace
-import torch, sys
-sys.path.append('/content/encoder4editing')
-from models.psp import pSp
-
-ckpt_path = "/content/encoder4editing/e4e_ffhq.pt"
-ckpt = torch.load(ckpt_path, map_location='cuda')
-opts = ckpt['opts']
-opts['checkpoint_path'] = ckpt_path
-opts = Namespace(**opts)
-
-net = pSp(opts)
-net.eval().cuda()
-print("✅ e4e model loaded!")
-```
-
-### 5. Run the Flask server with ngrok
-
-Use the provided server script that includes CORS and real-time processing at `/process`.
-
-```python
-!pkill -f ngrok
-!ngrok authtoken YOUR_NGROK_AUTH_TOKEN
-public_url = ngrok.connect(5000).public_url
-print("🚀 Backend running at:", public_url + "/process")
-```
+Then update `script.js` with your live ngrok URL each time you restart the backend.
 
 ---
 
-## 📱 Frontend Setup
+## 🧠 Notes & Troubleshooting
 
-1. Go to: [https://github.com/markduink/Doppelganger_videocall](https://github.com/markduink/Doppelganger_videocall)
-2. Replace `SERVER_URL` in `script.js` with the live ngrok URL
-3. Commit & push your changes
-4. Open your GitHub Pages link: [https://markduink.github.io/Doppelganger_videocall](https://markduink.github.io/Doppelganger_videocall)
-
----
-
-## 💡 Troubleshooting
-
-- If webcam doesn't show: check browser permissions  
-- If ngrok URL expires: restart ngrok cell and update `script.js`  
-- To speed up generation: reduce interval time in `setInterval(sendFrame, 800)`  
-- To animate output: interpolate latent vectors each frame instead of re-encoding
+- ❗ The Colab backend must remain open and running for the app to work.
+- 🔁 Ngrok URLs change on each session unless you pay for a static one.
+- 🚫 If your webcam isn’t showing, make sure your browser has access permission.
+- 🖼 If the transformed image isn’t updating, check the console for CORS or model errors.
 
 ---
 
-## 📂 Reference Links
+## 📁 Resources & Downloads
 
-- 🔗 Model repo: [omertov/encoder4editing](https://github.com/omertov/encoder4editing)
-- 📁 Frontend repo: [markduink/Doppelganger_videocall](https://github.com/markduink/Doppelganger_videocall)
-- 📀 e4e model file: `/content/drive/MyDrive/e4e_ffhq_encode.pt`
+- 🧠 **Encoder model:**  
+  [e4e_ffhq_encode.pt](https://drive.google.com/file/d/1FGhfqu6iLkhkRYnVh_z1nRxy1sDazXvU/view?usp=sharing)  
+  Upload this to your Google Drive and use it in Colab.
+  
+- 🔧 **Model repo:**  
+  [omertov/encoder4editing](https://github.com/omertov/encoder4editing)
+
+- 🎨 **Frontend repo:**  
+  [markduink/Doppelganger_videocall](https://github.com/markduink/Doppelganger_videocall)
 
 ---
 
-## 😍 Acknowledgements
+## 🙌 Credits
 
-Built with:
+- Based on StyleGAN2 + pSp (via e4e)  
+- Google Colab for backend compute  
+- GitHub Pages for live deployment  
+- Designed with FaceTime-style inspiration
 
-- StyleGAN2 + pSp (via e4e)  
-- Google Colab for backend  
-- GitHub Pages for frontend  
-- You, for being your authentic self ✨
+---
+
+🧬 _Built to explore algorithmic identity and visual AI transformation._
+
