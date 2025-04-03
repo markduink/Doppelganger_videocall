@@ -4,8 +4,8 @@ const ctx = canvas.getContext('2d');
 const output = document.getElementById('output');
 const statusLabel = document.getElementById('status');
 
-// 💡 Replace with your active ngrok URL
-const SERVER_URL = "https://4ea3-35-240-179-116.ngrok-free.app";
+// ✅ Use your active ngrok URL + correct endpoint
+const SERVER_URL = "https://20b0-35-198-201-173.ngrok-free.app/process";
 
 async function startWebcam() {
   try {
@@ -13,6 +13,7 @@ async function startWebcam() {
     video.srcObject = stream;
   } catch (err) {
     console.error("❌ Failed to access webcam:", err);
+    statusLabel.textContent = "❌ Cannot access webcam";
   }
 }
 
@@ -36,20 +37,23 @@ async function sendFrame() {
 
     if (result.image) {
       output.src = `data:image/jpeg;base64,${result.image}`;
-      statusLabel.style.display = "none"; // ✅ Hide “Connecting...” on success
+      statusLabel.style.display = "none"; // ✅ Hide when working
     } else {
-      console.warn("⚠️ No image returned.");
+      console.warn("⚠️ Server returned no image");
+      statusLabel.style.display = "block";
       statusLabel.textContent = "🔄 Connecting...";
     }
   } catch (err) {
     console.error("❌ Error sending frame:", err);
+    statusLabel.style.display = "block";
     statusLabel.textContent = "🔄 Connecting...";
   }
 }
 
+// 🔁 Send frames repeatedly
 video.addEventListener('loadeddata', () => {
-  setInterval(sendFrame, 800); // faster refresh for more real-time
+  setInterval(sendFrame, 800); // ⏱️ Increase/decrease interval here
 });
 
+// 🔌 Start
 startWebcam();
-
