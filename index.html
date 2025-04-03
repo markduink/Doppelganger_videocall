@@ -6,36 +6,35 @@
   <title>Live Webcam GAN Art</title>
   <style>
     body {
+      font-family: sans-serif;
       margin: 0;
       padding: 0;
       background: #000;
       color: white;
       overflow: hidden;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     #webcam {
       position: fixed;
       top: 20px;
       left: 20px;
-      width: 220px;
-      height: 150px;
-      object-fit: cover;
+      width: 200px;
+      height: auto;
+      transform: scaleX(-1); /* mirror effect */
       z-index: 2;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     }
 
     #output {
       position: absolute;
-      top: 0;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate(-50%, -50%);
       height: 100vh;
-      max-height: 100vh;
       object-fit: contain;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.05);
       z-index: 1;
-      border-left: 1px solid #111;
-      border-right: 1px solid #111;
     }
 
     #status {
@@ -45,7 +44,7 @@
       transform: translate(-50%, -50%);
       background: rgba(0, 0, 0, 0.6);
       padding: 10px 20px;
-      border-radius: 12px;
+      border-radius: 10px;
       font-size: 18px;
       color: white;
       z-index: 3;
@@ -55,25 +54,26 @@
       position: fixed;
       bottom: 20px;
       left: 20px;
-      z-index: 3;
       width: 300px;
-    }
-
-    #dock img {
-      width: 100%;
       height: auto;
-      display: block;
+      z-index: 4;
     }
   </style>
 </head>
 <body>
+  <!-- Webcam stream -->
   <video id="webcam" autoplay muted playsinline></video>
-  <img id="output" alt="Transformed Artwork" />
-  <div id="status">🔄 Connecting...</div>
-  <div id="dock">
-    <img src="dock.png" alt="Controls" />
-  </div>
 
+  <!-- AI Transformed artwork -->
+  <img id="output" alt="Transformed Artwork" />
+
+  <!-- Status text -->
+  <div id="status">🔄 Connecting...</div>
+
+  <!-- Control dock image -->
+  <img id="dock" src="dock.png" alt="Video Controls" />
+
+  <!-- JS Logic -->
   <script src="script.js"></script>
 </body>
 </html>
