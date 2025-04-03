@@ -113,40 +113,79 @@ You should see your webcam and the GAN-generated doppelgänger side-by-side, Fac
 from google.colab import drive
 drive.mount('/content/drive')
 !cp "/content/drive/MyDrive/e4e_ffhq_encode.pt" "/content/encoder4editing/e4e_ffhq.pt"
+```
 
+Replace it with your actual ngrok URL from Colab.
 
-Repositories & Links:
-Encoder repo: https://github.com/omertov/encoder4editing
+Commit the changes to GitHub.
 
-This repo: https://github.com/markduink/Doppelganger_videocall
+Open your live frontend site:  
+[https://markduink.github.io/Doppelganger_videocall](https://markduink.github.io/Doppelganger_videocall)
 
-Live frontend: https://markduink.github.io/Doppelganger_videocall
+You should see your webcam and the GAN-generated doppelgänger side-by-side, FaceTime-style.
 
-Demo video: https://www.youtube.com/watch?v=O8adgXXSpoI
+---
 
+## Requirements
 
+### Colab Backend:
+- Python 3.9+ (Colab default)
+- PyTorch 1.7.1 + CUDA 11.0
+- encoder4editing repo
+- Pretrained e4e model (`e4e_ffhq_encode.pt`)
+- Required pip packages:
+  - flask  
+  - flask_cors  
+  - pyngrok  
+  - face-recognition  
+  - torchvision  
+  - ninja  
 
-Notes & Troubleshooting
-The Colab server must stay open for the site to function.
+### GitHub Pages Frontend:
+- HTML + JavaScript
+- Works in modern browsers (webcam permission required)
 
-Ngrok URLs expire unless you're using a static domain.
+---
 
-If webcam doesn’t appear, check browser permissions.
+## Resources
 
-If nothing loads, check your browser console and Colab for errors.
+### Pretrained model:  
+**Download:**  
+[e4e_ffhq_encode.pt](https://huggingface.co/anzorq/e4e-ffhq/resolve/main/e4e_ffhq_encode.pt)
 
-For performance, you can lower the frame interval in script.js from 800 to 400 (this increases load).
+**Upload it to your Google Drive and copy it in Colab using:**
+```python
+from google.colab import drive
+drive.mount('/content/drive')
+!cp "/content/drive/MyDrive/e4e_ffhq_encode.pt" "/content/encoder4editing/e4e_ffhq.pt"
+```
 
-You can create smooth doppelgänger motion by interpolating the latent space output from net.encoder.
+---
 
-Credits
-Built with StyleGAN2 + pSp via the e4e encoder
+## Repositories & Links:
+- Encoder repo: https://github.com/omertov/encoder4editing  
+- This repo: https://github.com/markduink/Doppelganger_videocall  
+- Live frontend: https://markduink.github.io/Doppelganger_videocall  
+- Demo video: https://www.youtube.com/watch?v=O8adgXXSpoI
 
-Real-time processing using PyTorch and Flask
+---
 
-Hosted with Google Colab and GitHub Pages
+## Notes & Troubleshooting
+- The Colab server must stay open for the site to function.
+- Ngrok URLs expire unless you're using a static domain.
+- If webcam doesn’t appear, check browser permissions.
+- If nothing loads, check your browser console and Colab for errors.
+- For performance, you can lower the frame interval in `script.js` from 800 to 400 (this increases load).
+- You can create smooth doppelgänger motion by interpolating the latent space output from `net.encoder`.
 
-Designed to explore identity, transformation, and generative media
+---
+
+## Credits
+- Built with StyleGAN2 + pSp via the e4e encoder  
+- Real-time processing using PyTorch and Flask  
+- Hosted with Google Colab and GitHub Pages  
+- Designed to explore identity, transformation, and generative media  
+
 
 
 
