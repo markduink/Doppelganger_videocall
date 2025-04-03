@@ -2,14 +2,10 @@ const video = document.getElementById('webcam');
 const canvas = document.createElement('canvas');
 const ctx = canvas.getContext('2d');
 const output = document.getElementById('output');
-const statusText = document.createElement('div'); // for "Connecting..."
-statusText.innerText = "🔄 Connecting...";
-statusText.style.fontSize = "20px";
-statusText.style.marginTop = "10px";
-document.body.appendChild(statusText);
+const statusLabel = document.getElementById('status');
 
-
-const SERVER_URL = "https://c260-34-143-227-250.ngrok-free.app"; 
+// 💡 Replace with your active ngrok URL
+const SERVER_URL = "https://your-ngrok-url.ngrok-free.app/process";
 
 async function startWebcam() {
   try {
@@ -30,11 +26,9 @@ async function sendFrame() {
   const imageData = canvas.toDataURL('image/jpeg').split(',')[1];
 
   try {
-    const response = await fetch(`${SERVER_URL}/process`, {
+    const response = await fetch(SERVER_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ image: imageData })
     });
 
@@ -42,23 +36,19 @@ async function sendFrame() {
 
     if (result.image) {
       output.src = `data:image/jpeg;base64,${result.image}`;
-      statusText.innerText = "";  // hide status if image is returned
-    } else if (result.error) {
-      console.warn("⚠️ Server message:", result.error);
-      if (result.error.includes("No face detected")) {
-        statusText.innerText = "🔄 Connecting...";
-      } else {
-        statusText.innerText = "⚠️ Error: " + result.error;
-      }
+      statusLabel.style.display = "none"; // ✅ Hide “Connecting...” on success
+    } else {
+      console.warn("⚠️ No image returned.");
+      statusLabel.textContent = "🔄 Connecting...";
     }
   } catch (err) {
     console.error("❌ Error sending frame:", err);
-    statusText.innerText = "❌ Connection error";
+    statusLabel.textContent = "🔄 Connecting...";
   }
 }
 
 video.addEventListener('loadeddata', () => {
-  setInterval(sendFrame, 1000); // You can speed this up if needed
+  setInterval(sendFrame, 800); // faster refresh for more real-time
 });
 
 startWebcam();
