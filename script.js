@@ -5,7 +5,7 @@ const output = document.getElementById('output');
 const statusLabel = document.getElementById('status');
 
 // 💡 Replace with your active ngrok URL
-const SERVER_URL = "https://92bf-35-240-179-116.ngrok-free.app";
+const SERVER_URL = "https://4ea3-35-240-179-116.ngrok-free.app";
 
 async function startWebcam() {
   try {
