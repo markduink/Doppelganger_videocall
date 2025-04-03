@@ -37,15 +37,25 @@
 
     #status {
       position: fixed;
-      bottom: 20px;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.6);
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.6);
       padding: 10px 20px;
       border-radius: 10px;
       font-size: 18px;
       color: white;
       z-index: 3;
+    }
+
+    #dock {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 240px;
+      z-index: 4;
+      opacity: 0.95;
     }
   </style>
 </head>
@@ -54,8 +64,11 @@
   <img id="output" alt="Transformed Artwork" />
   <div id="status">🔄 Connecting...</div>
 
-  <!-- JavaScript -->
+  <!-- ⬇️ Control Dock -->
+  <img id="dock" src="dock.png" alt="Video Call Controls" />
+
   <script src="script.js"></script>
 </body>
 </html>
+
 
